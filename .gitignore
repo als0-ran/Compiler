@@ -1,3 +1,13 @@
 .vscode/settings.json
 sysy-make-template/build
 *.o
+sysy-make-template/build/compiler
+sysy-make-template/build/main.cpp.d
+sysy-make-template/build/main.cpp.o
+sysy-make-template/build/sysy.lex.cpp
+sysy-make-template/build/sysy.lex.cpp.d
+sysy-make-template/build/sysy.lex.cpp.o
+sysy-make-template/build/sysy.tab.cpp
+sysy-make-template/build/sysy.tab.cpp.d
+sysy-make-template/build/sysy.tab.cpp.o
+sysy-make-template/build/sysy.tab.hpp
