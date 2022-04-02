@@ -1,6 +1,4 @@
 .vscode/settings.json
-sysy-make-template/build
-*.o
 sysy-make-template/build/compiler
 sysy-make-template/build/main.cpp.d
 sysy-make-template/build/main.cpp.o
