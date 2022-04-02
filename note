@@ -1,0 +1,12 @@
+docker:
+    docker run -it  -v /home/duk/compiler:/root/compiler maxxing/compiler-dev bash
+
+
+compiler:
+    build/compiler -koopa hello.c -o hello.koopa
+
+flex:
+    ECHO 回显
+    REJECT  REJECT的作用到底是什么？其实就是：放弃当前的字符串和模式，让扫描器重新扫描这个字符串，寻找一个次优的模式来匹配，上面扫描abcd的例子是这样工作的：首先发现abcd匹配后，执行ECHO，将abcd写到输出，然后执行REJECT，于是重新扫描，这时，相对于a |和ab |，abc |就是次优规则，然后将abc写到输出，又重新扫描，然后是ab，最后是a
+    yymore（）告诉扫描器下一次匹配规则时，相应的token应该附加到yytext的当前值上，而不是替换它。 例如，考虑到输入“mega-kludge”，以下将把“mega-kludge”写成输出：
+
