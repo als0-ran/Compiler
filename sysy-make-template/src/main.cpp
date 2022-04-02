@@ -34,7 +34,7 @@ cout << input<<endl;
   assert(!ret);
   freopen(output, "w", stdout);
   ast->Dump();
-  cout << endl;
+ //cout << endl;
 
   // ast->KoopaIR(output);
       // 输出解析得到的 AST, 其实就是个字符串
