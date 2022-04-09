@@ -1,7 +1,7 @@
 #ifndef AST_H
 #define AST_H
 #include<iostream>
-#include<fstream>
+#include<sstream>
 
 // 所有 AST 的基类
 class BaseAST
@@ -9,7 +9,7 @@ class BaseAST
         public:
                 virtual ~BaseAST() = default;
                 virtual void Dump() const = 0;
-                virtual void KoopaIR(const char* file)  = 0;
+                virtual void KoopaIR(std::string &ir_str)  = 0;
 };
 
 // CompUnit 是 BaseAST
@@ -24,14 +24,10 @@ class CompUnitAST : public BaseAST
                         func_def->Dump();
                         //std::cout << " }";
                 }
-                void KoopaIR(const char *file) override
+                void KoopaIR(std::string &ir_str ) override
                 {
-                        std::ofstream outfile;
-                        outfile.open(file, std::ios::app);
-                        outfile << "define ";
-                        func_def->KoopaIR(file);
-                        outfile.close();
-
+                        
+                        func_def->KoopaIR(ir_str);
                 }
                 
 };
@@ -55,18 +51,18 @@ class FuncDefAST : public BaseAST
                         std::cout<< std::endl;
                         std::cout << " }";
                 }
-                void KoopaIR(const char *file) override
+                void KoopaIR(std::string &ir_str ) override
                 {
-                        std::ofstream outfile;
-                        outfile.open(file,std::ios::app);
-                        //outfile << "define ";
+                        std::string str;
+                        str  = "fun @"+ ident +"():";
+                        ir_str = str;
+                        func_type->KoopaIR(ir_str);
+                        str = "{\n";
+                        ir_str += str;
+                        block->KoopaIR( ir_str);
+                        str = "\n}";
+                        ir_str+=str;
                         
-                        outfile <<"fun"<< " @" << ident << "()";
-                        func_type->KoopaIR(file);
-                        outfile << "{"<<std::endl;                        
-                        block->KoopaIR(file);
-                        outfile << std::endl << "}";
-                        outfile.close();
                 }
 };
 
@@ -78,12 +74,11 @@ class FunctypeAST: public BaseAST
                 {
                         std::cout << type;
                 }
-                void KoopaIR(const char *file) override
+                void KoopaIR(std::string &ir_str ) override
                 {
-                        std::ofstream outfile;
-                        outfile.open(file,std::ios::app);
-                        outfile << type;
-                        outfile.close();
+                         std::string str;
+                        str = type;
+                        ir_str += str;
                 }
 };
 
@@ -97,13 +92,14 @@ class BlockAST:public BaseAST
                         stmt->Dump();
                         //std::cout << " }";
                 }
-                void KoopaIR(const char *file) override
+                void KoopaIR(std::string &ir_str ) override
                 {
-                        std::ofstream outfile;
-                        outfile.open(file,std::ios::app);
-                        outfile << "%entry:"<< std::endl;
-                        stmt->KoopaIR(file);
-                        outfile.close();
+                         std::string str;
+                        str = "%entry:\n";
+                        ir_str += str;
+                        stmt->KoopaIR(ir_str);
+                        //str = "\n}";
+                        //ir_str+=str;
                 }
 };
 class StmtAST:public BaseAST
@@ -114,12 +110,9 @@ class StmtAST:public BaseAST
                 {
                         std::cout << " ret " << number ;
                 }
-                void KoopaIR(const char *file) override
+                void KoopaIR(std::string &ir_str ) override
                 {
-                        std::ofstream outfile;
-                        outfile.open(file,std::ios::app);
-                        outfile << "ret " << number;
-                        outfile.close();
+                        ir_str += "ret " + std:: to_string(number);
                 }
 };
 

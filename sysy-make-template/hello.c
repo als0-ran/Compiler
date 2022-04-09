@@ -1,3 +1,4 @@
 int main(){
-        return 0;
+        // Prints "Hello, World!"
+        return 1;
 }
